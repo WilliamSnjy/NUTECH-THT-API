@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const app = express()
-const PORT = process.env.PORT || 3000;
+const port = 3000
 
 app.use(express.json());
 
@@ -22,11 +22,11 @@ app.get('/', (req, res) => {
 app.use('/', register)
 app.use('/', login)
 
-app.use('/', authenticateToken, profileRoutes)
 app.use('/', bannerRoutes)
+app.use('/', authenticateToken, profileRoutes)
 app.use('/', authenticateToken, serviceRoutes)
 app.use('/', authenticateToken, balanceRoutes)
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`)
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
 })

@@ -20,14 +20,18 @@ router.post('/topup', (req, res) => {
     const {top_up_amount} = req.body;
     const invoice_number = `INV-${Date.now()}`;
     const date = new Date();
-    const desc = 'Top Up Balance'
+    const desc = 'Top Up Balance';
+    const serviceId = 0;
 
     if(Number(top_up_amount) <= 0 || isNaN(top_up_amount)){
         return response(400, 'Parameter amount hanya boleh angka dan tidak boleh lebih kecil dari 0', null, res)
     }
 
-    const query = 'INSERT INTO transactions (invoice_number, transaction_type, total_amount, created_on, id_user, description) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *'
-    client.query(query, [invoice_number, 'TOPUP', top_up_amount, date, id_user, desc], (err, topupResult) => {
+    const query = 'INSERT INTO transactions (invoice_number, transaction_type, total_amount, created_on, id_user, id_service, description) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *'
+    client.query(query, [invoice_number, 'TOPUP', top_up_amount, date, id_user, serviceId, desc], (err, topupResult) => {
+        if(err){
+            return response (500, 'gagal memasukkan topup', null, res)
+        }
         const sumQuery = 'UPDATE users SET balance = balance + $1 WHERE id = $2 RETURNING balance'
         client.query(sumQuery, [top_up_amount, id_user], (err, sumResult) => {
             if(err){
