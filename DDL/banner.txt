@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS public.banner
+(
+    id integer NOT NULL DEFAULT nextval('banner_id_seq'::regclass),
+    banner_name text COLLATE pg_catalog."default",
+    banner_image text COLLATE pg_catalog."default",
+    description text COLLATE pg_catalog."default",
+    CONSTRAINT banner_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.banner
+    OWNER to admin;

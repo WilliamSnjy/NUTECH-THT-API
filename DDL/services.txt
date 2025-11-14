@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS public.services
+(
+    id integer NOT NULL DEFAULT nextval('services_id_seq'::regclass),
+    service_code text COLLATE pg_catalog."default",
+    service_name text COLLATE pg_catalog."default",
+    service_icon text COLLATE pg_catalog."default",
+    service_tariff bigint,
+    CONSTRAINT services_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.services
+    OWNER to admin;

@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS public.transactions
+(
+    id integer NOT NULL DEFAULT nextval('transactions_id_seq'::regclass),
+    invoice_number text COLLATE pg_catalog."default",
+    transaction_type text COLLATE pg_catalog."default",
+    total_amount bigint,
+    created_on date,
+    id_user bigint NOT NULL,
+    id_service bigint,
+    description text COLLATE pg_catalog."default",
+    CONSTRAINT transactions_pkey PRIMARY KEY (id, id_user),
+    CONSTRAINT id_user FOREIGN KEY (id_user)
+        REFERENCES public.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.transactions
+    OWNER to admin;
